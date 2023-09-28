@@ -26,15 +26,6 @@ def get_dir_size(path: str = os.getcwd()):
     return total
 
 
-def parent_dir(path: str = os.getcwd()):
-    with os.scandir(path) as it:
-        for entry in it:
-            if entry.is_dir():
-                return os.path.dirname(path)
-            else:
-                continue
-
-
 def dirtree_info(path: str = os.getcwd()):
     dirtree_dic = {}
     for files in os.walk(path):
@@ -47,6 +38,7 @@ def dirtree_info(path: str = os.getcwd()):
 
 with open('dirtree.json', 'w', encoding='UTF-8') as f_1:
     json.dump(dirtree_info(), f_1, indent='\t', ensure_ascii=False)
+
 with open('dirtree.csv', 'w', newline='', encoding='UTF-8') as f_2:
     dict_tree = dirtree_info()
     csv_lst = []
@@ -56,18 +48,10 @@ with open('dirtree.csv', 'w', newline='', encoding='UTF-8') as f_2:
         for data in value:
             csv_line.append(data)
         csv_lst.append(csv_line)
-
     csv_file = csv.writer(f_2, dialect='excel', delimiter=' ', lineterminator='\n')
     csv_file.writerows(csv_lst)
+
 with open('dirtree.pickle', 'wb') as f_3:
     pickle.dump(dirtree_info(), f_3)
 
 
-
-
-
-
-
-
-print(os.getcwd())
-print(dirtree_info())
